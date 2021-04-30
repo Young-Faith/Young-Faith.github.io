@@ -56,7 +56,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":10},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":10},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -238,25 +238,25 @@
 <p>背会默写的时候，就弄个随机函数把单词顺序打乱，之后隐藏汉语或英语的那一列。</p>
 <p>时间久了就会感到很麻烦很累，所以想能不能自己做个程序，让它来做随机这个事情，我只需点击下一个就行了？</p>
 <h1 id="选用-Python"><a href="#选用-Python" class="headerlink" title="选用 Python"></a>选用 Python</h1><p>只用过 Python 做PC端的图形界面，打包也很简单，所以就用它了。(其他的都不会。。。)</p>
-<h1 id="最后做出来是这样的"><a href="#最后做出来是这样的" class="headerlink" title="最后做出来是这样的"></a>最后做出来是这样的</h1><h2 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208144120.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="最后做出来是这样的"><a href="#最后做出来是这样的" class="headerlink" title="最后做出来是这样的"></a>最后做出来是这样的</h1><h2 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208144120.png"></p>
 <p>我也不知道这个图标是什么东西，看起来像书？</p>
 <h2 id="程序界面"><a href="#程序界面" class="headerlink" title="程序界面"></a>程序界面</h2><ul>
 <li>主界面</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208144512.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208144512.png"></p>
 <p>​        </p>
 <ul>
 <li>单词模式(显示单词，默写汉语)</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153347.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153347.png"></p>
 <ul>
 <li><p>翻译模式(显示汉语，默写单词)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153428.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153428.png"></p>
 </li>
 </ul>
 <ul>
 <li><p>显示全部界面(显示全部单词和对应的汉语)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153543.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153543.png"></p>
 </li>
 </ul>
 <h1 id="程序思路"><a href="#程序思路" class="headerlink" title="程序思路"></a>程序思路</h1><p>首先是有一个 Excel 表格文件，这个文件里有若干个 sheet ，每个 sheet 里是生词。</p>
@@ -311,10 +311,10 @@
 <li><p>刚开始困扰我的问题</p>
 <p>用 openpyxl 库可以拿到表中的数据，A 列为单词，B 列为汉语翻译。用 for 循环拿到后是两个列表。但是我想做成一组数据，然后里面是 单词和翻译一一对应的形式。</p>
 <p>找了一下，发现了zip函数：将两个列表对应的压缩成一个元组。压缩后是这样的：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208162708.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208162708.png"></p>
 <p>不太理想啊！</p>
 <p>然后惊奇的发现了 dict 函数： 创建一个字典。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208163049.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208163049.png"></p>
 <p>这样感觉像是一一对应了。嗯！</p>
 <p>本以为事情解决了，突然发现字典不能随机排序！！ </p>
 <p>没办法了，只能先用 zip 函数组成元组，然后排序，最后用 dict 函数创建字典。</p>
@@ -492,10 +492,6 @@
 
 <!-- Plugins -->
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
 
 
 
