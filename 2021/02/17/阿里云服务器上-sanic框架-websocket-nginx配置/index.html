@@ -239,19 +239,19 @@
 <p>结果卡在了 Websocket 使用WSS 一直连接不通。</p>
 <p>后端是 python ，用了 sanic 框架，当时摸索了好几天(第一次接触这东西)，简直要疯了，然后放弃了。</p>
 <p>这次寒假在家，又想起来这个玩意儿了，看了一下，突然灵光乍现。MD之前自己一直把方向给搞错了。</p>
-<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217194835.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217194835.png"></p>
 <p>之前一直报这种错误，错误代码不一样：404， 500， 504。</p>
 <p>在网上一顿搜，也确定了出错的地方肯定是 nginx 的配置。</p>
 <p>当时网上的各种配置我也照着做了，还是不行。</p>
 <h1 id="发现错误"><a href="#发现错误" class="headerlink" title="发现错误"></a>发现错误</h1><p>这次折腾的时候发现了。</p>
 <p><strong>之前一直是直接以 WebSocket 为关键词搜索，忽略了 Sanic。</strong></p>
 <p>(当时脑子可能不顶用了)</p>
-<h1 id="正确配置"><a href="#正确配置" class="headerlink" title="正确配置"></a>正确配置</h1><h2 id="监听地址、端口"><a href="#监听地址、端口" class="headerlink" title="监听地址、端口"></a>监听地址、端口</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217200120.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="正确配置"><a href="#正确配置" class="headerlink" title="正确配置"></a>正确配置</h1><h2 id="监听地址、端口"><a href="#监听地址、端口" class="headerlink" title="监听地址、端口"></a>监听地址、端口</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217200120.png"></p>
 <p>在服务器上的话，地址填<code>0.0.0.0</code></p>
 <p>这个地址表示服务器上所有 ipv4地址都可以访问这个服务。</p>
 <p>端口的选择要遵循一定规则 → <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E5%8F%B7">看我</a></p>
 <p>同时，在阿里云控制台中的安全组内要添加上这个端口。</p>
-<h2 id="Sanic路由"><a href="#Sanic路由" class="headerlink" title="Sanic路由"></a>Sanic路由</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217203804.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Sanic路由"><a href="#Sanic路由" class="headerlink" title="Sanic路由"></a>Sanic路由</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217203804.png"></p>
 <p>配置路由地址时，所有具有<code>功能</code>的路由，地址的<code>第一段</code>要填写的一样。就像<code>api</code> 这样(不一定是api，其他的字母也可以。实在不知道要怎么表达。。。。)</p>
 <p>这是我看 Sanic 文档摸索出来的，不知道有没有别的方法。。。</p>
 <h2 id="nginx-配置，反代理"><a href="#nginx-配置，反代理" class="headerlink" title="nginx 配置，反代理"></a>nginx 配置，反代理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs apl">upstream example.com &#123;<br>  keepalive 100;<br>  server 127.0.0.1:8000; 	# 地址不要改，端口可以改<br>&#125;<br><br>server &#123;<br>  server_name example.com;<br>  listen 443 ssl http2 default_server;<br>  listen [::]:443 ssl http2 default_server;<br>  location &#x2F; &#123;<br>    root &#x2F;var&#x2F;www;<br>    index index.html index.htm;<br>  &#125;<br>  location &#x2F;api &#123;	# location 后面填sanic路由那里你填的第一段。很重要！！<br>    proxy_pass http:&#x2F;&#x2F;$server_name; # 这里http后面的内容不要改<br>    proxy_http_version 1.1;	# 必要<br>    proxy_set_header connection &quot;upgrade&quot;;	# 必要<br>    proxy_set_header upgrade $http_upgrade;	# 必要<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
