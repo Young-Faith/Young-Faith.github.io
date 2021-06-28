@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>随机单词</title>
+      <link href="/2021/02/18/%E9%9A%8F%E6%9C%BA%E5%8D%95%E8%AF%8D/"/>
+      <url>/2021/02/18/%E9%9A%8F%E6%9C%BA%E5%8D%95%E8%AF%8D/</url>
+      
+        <content type="html"><![CDATA[<p>最近复习英语，做题或遇到很多生词或短语。然后会把这些此都记录下来，放到Excel表格里。</p><p>背会默写的时候，就弄个随机函数把单词顺序打乱，之后隐藏汉语或英语的那一列。</p><p>时间久了就会感到很麻烦很累，所以想能不能自己做个程序，让它来做随机这个事情，我只需点击下一个就行了？</p><h1 id="选用-Python"><a href="#选用-Python" class="headerlink" title="选用 Python"></a>选用 Python</h1><p>只用过 Python 做PC端的图形界面，打包也很简单，所以就用它了。(其他的都不会。。。)</p><h1 id="最后做出来是这样的"><a href="#最后做出来是这样的" class="headerlink" title="最后做出来是这样的"></a>最后做出来是这样的</h1><h2 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208144120.png"></p><p>我也不知道这个图标是什么东西，看起来像书？</p><h2 id="程序界面"><a href="#程序界面" class="headerlink" title="程序界面"></a>程序界面</h2><ul><li>主界面</li></ul><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208144512.png"></p><p>​        </p><ul><li>单词模式(显示单词，默写汉语)</li></ul><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153347.png"></p><ul><li><p>翻译模式(显示汉语，默写单词)</p><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153428.png"></p></li></ul><ul><li><p>显示全部界面(显示全部单词和对应的汉语)</p><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208153543.png"></p></li></ul><h1 id="程序思路"><a href="#程序思路" class="headerlink" title="程序思路"></a>程序思路</h1><p>首先是有一个 Excel 表格文件，这个文件里有若干个 sheet ，每个 sheet 里是生词。</p><ol><li><p>让程序加载这个 Excel 。</p><p>程序需要展示表格数据，第一步就是要加载这个表格</p></li><li><p>读取 sheet 里的数据</p><p>拿到里面的单词数据才能展示出来</p></li><li><p>单词随机打乱顺序</p><p>因为这是个帮助默写，背单词的程序，所以一定要把单词顺序随机打乱</p></li><li><p>把单词打印到屏幕上，可以通过单击按钮或这操作键盘来显示下一个单词。</p></li><li><p>默认只展示英文或汉语。通过单机按钮可以显示翻译。</p></li><li><p>最后有个对答案的过程，需要显示全部的单词和翻译</p></li><li><p>如果能加上一个单词发音就更好了</p></li><li><p>打包成<code>.exe</code>程序</p></li></ol><h1 id="用到的-python-库"><a href="#用到的-python-库" class="headerlink" title="用到的 python 库"></a>用到的 python 库</h1><ol><li><p>这个程序做的是带图形界面的，所以要用到 python 的 GUI库：</p><p><a href="https://docs.python.org/3/library/tkinter.html">tkinter</a></p><p>试了几个 GUI 库，觉得这个比较适合我这样的新手。</p></li><li><p>操作 Excel 的 python 库：</p><p><a href="https://openpyxl.readthedocs.io/en/stable/">openpyxl</a></p><p>这个是可以操作 后缀为 <code>.xlsx</code>的文件</p></li><li><p>随机单词顺序的 Python 标准库：</p><p><a href="https://docs.python.org/3/library/random.html">Random</a></p></li><li><p>其他的步骤都是用的 tkinter </p></li><li><p>单词发音：</p><p><a href="https://github.com/TaylorSMarks/playsound">playsound</a></p><p>播放音频，参数可以是一个文件，或者是 URL</p></li><li><p>打包</p><p><a href="http://www.pyinstaller.org/funding.html">pyinstaller</a></p><p>可以把你的程序打包成 <code>.exe</code>文件在 windows上运行，且运行时不需要安装环境。</p></li></ol><h1 id="遇到的难点"><a href="#遇到的难点" class="headerlink" title="遇到的难点"></a>遇到的难点</h1><p>Python 压根就不懂，所以全是难点。。。。</p><p>整个程序就是 需要什么功能就去找相关的文章，或者 python 库啊什么的。。。</p><p>一边摸索一边写</p><ol><li><p>刚开始困扰我的问题</p><p>用 openpyxl 库可以拿到表中的数据，A 列为单词，B 列为汉语翻译。用 for 循环拿到后是两个列表。但是我想做成一组数据，然后里面是 单词和翻译一一对应的形式。</p><p>找了一下，发现了zip函数：将两个列表对应的压缩成一个元组。压缩后是这样的：</p><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208162708.png"></p><p>不太理想啊！</p><p>然后惊奇的发现了 dict 函数： 创建一个字典。</p><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210208163049.png"></p><p>这样感觉像是一一对应了。嗯！</p><p>本以为事情解决了，突然发现字典不能随机排序！！ </p><p>没办法了，只能先用 zip 函数组成元组，然后排序，最后用 dict 函数创建字典。</p><p>虽然方法很笨，但总算是解决了。</p></li><li><p>单词发音</p><p>因为这只是一个小的程序，不可能在本地弄个单词音频包。太麻烦。</p><p>所以想到了用 发音的API接口。找了一圈没找到(可能自己不会找把)</p><p>最后在知乎上发现了一位同志发的 单词发音的链接。</p><p><a href="http://ssl.gstatic.com/dictionary/static/sounds/oxford/home--_gb_1.mp3">http://ssl.gstatic.com/dictionary/static/sounds/oxford/home--_gb_1.mp3</a></p><p><a href="http://dict.youdao.com/dictvoice?audio=home&amp;type=2">http://dict.youdao.com/dictvoice?audio=home&amp;type=2</a></p><p>在<code>home</code> 处填写单词，打开链接就会播放单词发音</p><p>第一个链接只能识别单词的原形</p><p>第二个链接很强，可以识别单词的各种形式，连短语也能识别并读出来</p><p><del>但是很可惜，我找的那个 python 发音库只能识别后缀为<code>.mp3</code>的链接</del></p><p><del>最后没办法只能用了第一个链接。</del></p><p><font size=5 color="red">修改：</font></p><p>因为第一个链接发音的问题，最后还是改用了第二个链接。替换后发音正常，并且可以读出短语了。</p><p>方法参考自：<a href="https://blog.csdn.net/humanking7/article/details/88630856">CSDN博主</a></p><blockquote><p>点击发音，从此链接上把<code>.mp3</code>文件下载到本地，然后使用<code>playsound</code>播放音频</p><p>当然，在下载前先判断本地是否有此文件，如果有，直接播放。</p></blockquote></li></ol><p>这个程序做出来只是为了自己方便，对于新手来说也挺有意义的。</p><p>代码就不放了，写的贼烂。</p><h1 id="最后放个操作视频"><a href="#最后放个操作视频" class="headerlink" title="最后放个操作视频"></a>最后放个操作视频</h1><div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"hotkey":true,"video":{"url":"https://cdn.jsdelivr.net/gh/Young-Faith/pic/video.mp4"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 记录 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo部署到云服务器</title>
+      <link href="/2021/02/18/hexo%E9%83%A8%E7%BD%B2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+      <url>/2021/02/18/hexo%E9%83%A8%E7%BD%B2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<p>准备好：</p><ul><li> 云服务器</li><li>域名</li></ul><h1 id="在本地hexo博客生成"><a href="#在本地hexo博客生成" class="headerlink" title="在本地hexo博客生成"></a>在本地hexo博客生成</h1><ul><li>本地系统是 Windows10</li></ul><h2 id="前置工具安装："><a href="#前置工具安装：" class="headerlink" title="前置工具安装："></a>前置工具安装：</h2><ul><li><p><a href="https://nodejs.org/dist/latest-v12.x/">Node.js</a></p><p>选择12版本的，新的版本hexo会报错</p></li><li><p><a href="https://git-scm.com/">Git</a></p><p>点击Download</p></li></ul><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210218160704.png"></p><p>如果能看到版本号，就算安装好了(在命令行使用之前，须要加入相应的环境变量)</p><h2 id="hexo-安装"><a href="#hexo-安装" class="headerlink" title="hexo 安装"></a>hexo 安装</h2><pre><code class="elm">npm install -g hexo-cli</code></pre><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210218171957.png"></p><p>能看到版本号就算安装成功了</p><p>新建一个文件夹作为博客目录，例如：hexo</p><p>进入<code>hexo</code>目录后依次执行：</p><pre><code class="elm">hexo initnpm install</code></pre><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210218174103.png"></p><p>然后就可以执行hexo命令了：</p><pre><code>hexo cl    #清理缓存hexo g    #渲染博客文件hexo s    #预览本地渲染好的博客hexo d    #部署至远端 (需要配置部署选项)</code></pre><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210218174851.png"></p><p>按住<code>Ctrl</code>键单机地址，会自动打开浏览器，在本地预览自己的博客。</p><h2 id="hexo部署配置"><a href="#hexo部署配置" class="headerlink" title="hexo部署配置"></a>hexo部署配置</h2><p>在 hexo 配置文件最后</p><pre><code>deploy:    type: git    repo: git@IP或域名:远程仓库路径# 如果修改了ssh端口的话，需要这么写：#    repo: ssh://git@IP或域名:端口号/远程仓库路径    branch: master</code></pre><p>如果需要部署到多个远端(比如：服务器和GitHub)，需要这么写：</p><pre><code>deploy:    type: git    repo:         github: git@github:GitHub用户名/远程仓库路径        server: git@IP或域名:远程仓库路径    branch: master</code></pre><h1 id="服务器上配置"><a href="#服务器上配置" class="headerlink" title="服务器上配置"></a>服务器上配置</h1><ul><li>系统是 Ubuntu </li></ul><p>创建一个用户，以后博客推送就通过这个用户</p><pre><code>useradd git -m    # git是示例，其他名字也行</code></pre><p>创建 Git 仓库：</p><pre><code>mkdir /var/repocd /var/repogit init --bare hexo.git</code></pre><p>创建钩子：</p><pre><code>cd /var/repo/hexo.git/hooksvim post-receive---------把下面一句内容复制进去-----------git --work-tree=/var/www/hexo --git-dir=/var/repo/hexo.git checkout -f------------------------------------------#第一段路径是网站路径，第二段是Git仓库路径</code></pre><h1 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h1><p>配置证书就不说了，阿里云文档里面有教程</p><p>改一下 nginx 用户</p><pre><code>vim /etc/nginx/nginx.conf# 在前几行找到 user ，把user后面的用户改成 root</code></pre><p>然后执行：</p><pre><code>chown -R git:git /var/repochmod -R 700 /var/repochown -R git:git /var/wwwchmod -R 700 /var/www</code></pre><p>把 Git 仓库用户改为 git 以确保推送时没有权限问题。因为推送时 SSH 使用的用户是 git。</p><p>最终博客文件是放到 www 目录了，所以 www 目录也需要有 git的权限。否则推送时会报无权限。</p><h1 id="在本地使用-Git-生成密钥对"><a href="#在本地使用-Git-生成密钥对" class="headerlink" title="在本地使用 Git 生成密钥对"></a>在本地使用 Git 生成密钥对</h1><p>密钥对用来<code>免密码登录服务器、免密码向服务器推送你的博客文件</code>，很方便</p><h2 id="本地执行"><a href="#本地执行" class="headerlink" title="本地执行"></a>本地执行</h2><p>在本地命令行输入：</p><pre><code class="s">ssh-keygen</code></pre><p>一路回车~~~后，就会看到这样的消息，并且在用户目录内生成了一个<code>.ssh</code>文件，里面就是密钥对：</p><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210218175716.png"></p><p>打开后缀<code>.pub</code>文件，复制里面全部内容</p><p><code>id_rsa</code> 文件要<font size=4 color='red'>保存好</font></p><h2 id="服务器上执行"><a href="#服务器上执行" class="headerlink" title="服务器上执行"></a>服务器上执行</h2><p>在 git 用户根目录创建：</p><pre><code>mkdir .sshvim authorized_keys# 然后把刚刚在本地复制的公钥的内容粘贴进去，保存</code></pre><p>改权限：</p><pre><code>chmod 700 .sshchmod 400 .ssh/authorized_keys # 防止被修改</code></pre><p>如果想给其他用户也配置免密码登录，就修改相应用户目录内的<code>.ssh</code>文件就行。</p><h2 id="登录测试"><a href="#登录测试" class="headerlink" title="登录测试"></a>登录测试</h2><pre><code>ssh git@IP地址 -p 端口号# 如果没有修改ssh端口号，就去掉-p</code></pre><p>输入yes后，如果没有需要输入密码的情况，就证明可以免密登录了。</p><h2 id="登录脚本配置"><a href="#登录脚本配置" class="headerlink" title="登录脚本配置"></a>登录脚本配置</h2><p>如果喜欢用终端远程登录的话，配置个登录脚本会更方便</p><p>在本地<code>.ssh</code>文件夹内创建<code>congfig</code>文件</p><p>写入下面的配置：</p><pre><code>Host XXX    #执行标本别名HostName 服务器IP地址Port 端口号User git    #需要登录的用户IdentityFile C:\Users\june\.ssh\id_rsa    #私钥文件 id_rsa 存放路径</code></pre><p>配置好后在命令行上直接输入下面的命令登录：</p><pre><code>ssh XXX    #上面自己起的别名</code></pre><h1 id="配置完成"><a href="#配置完成" class="headerlink" title="配置完成"></a>配置完成</h1><p><a href="https://hexo.io/zh-cn/docs/">Hexo官方文档</a></p><p><a href="https://github.com/fluid-dev/hexo-theme-fluid">推荐一款Hexo主题-fluid</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 记录 </tag>
+            
+            <tag> Hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>阿里云服务器上sanic框架,websocket,nginx配置</title>
+      <link href="/2021/02/17/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A-sanic%E6%A1%86%E6%9E%B6-websocket-nginx%E9%85%8D%E7%BD%AE/"/>
+      <url>/2021/02/17/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A-sanic%E6%A1%86%E6%9E%B6-websocket-nginx%E9%85%8D%E7%BD%AE/</url>
+      
+        <content type="html"><![CDATA[<p> 之前在GitHub上找了个项目，是人脸识别的。项目中用到了 WebSocket ，本地运行正常。</p><p>当时正好有个云服务器，想试试在服务器上能不能跑起来。</p><p>结果卡在了 Websocket 使用WSS 一直连接不通。</p><p>后端是 python ，用了 sanic 框架，当时摸索了好几天(第一次接触这东西)，简直要疯了，然后放弃了。</p><p>这次寒假在家，又想起来这个玩意儿了，看了一下，突然灵光乍现。MD之前自己一直把方向给搞错了。</p><h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217194835.png"></p><p>之前一直报这种错误，错误代码不一样：404， 500， 504。</p><p>在网上一顿搜，也确定了出错的地方肯定是 nginx 的配置。</p><p>当时网上的各种配置我也照着做了，还是不行。</p><h1 id="发现错误"><a href="#发现错误" class="headerlink" title="发现错误"></a>发现错误</h1><p>这次折腾的时候发现了。</p><p><strong>之前一直是直接以 WebSocket 为关键词搜索，忽略了 Sanic。</strong></p><p>(当时脑子可能不顶用了)</p><h1 id="正确配置"><a href="#正确配置" class="headerlink" title="正确配置"></a>正确配置</h1><h2 id="监听地址、端口"><a href="#监听地址、端口" class="headerlink" title="监听地址、端口"></a>监听地址、端口</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217200120.png"></p><p>在服务器上的话，地址填<code>0.0.0.0</code></p><p>这个地址表示服务器上所有 ipv4地址都可以访问这个服务。</p><p>端口的选择要遵循一定规则 → <a href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E5%8F%B7">看我</a></p><p>同时，在阿里云控制台中的安全组内要添加上这个端口。</p><h2 id="Sanic路由"><a href="#Sanic路由" class="headerlink" title="Sanic路由"></a>Sanic路由</h2><p><img src="https://cdn.jsdelivr.net/gh/Young-Faith/pic/20210217203804.png"></p><p>配置路由地址时，所有具有<code>功能</code>的路由，地址的<code>第一段</code>要填写的一样。就像<code>api</code> 这样(不一定是api，其他的字母也可以。实在不知道要怎么表达。。。。)</p><p>这是我看 Sanic 文档摸索出来的，不知道有没有别的方法。。。</p><h2 id="nginx-配置，反代理"><a href="#nginx-配置，反代理" class="headerlink" title="nginx 配置，反代理"></a>nginx 配置，反代理</h2><pre><code class="apl">upstream example.com &#123;  keepalive 100;  server 127.0.0.1:8000;     # 地址不要改，端口可以改&#125;server &#123;  server_name example.com;  listen 443 ssl http2 default_server;  listen [::]:443 ssl http2 default_server;  location / &#123;    root /var/www;    index index.html index.htm;  &#125;  location /api &#123;    # location 后面填sanic路由那里你填的第一段。很重要！！    proxy_pass http://$server_name; # 这里http后面的内容不要改    proxy_http_version 1.1;    # 必要    proxy_set_header connection &quot;upgrade&quot;;    # 必要    proxy_set_header upgrade $http_upgrade;    # 必要  &#125;&#125;</code></pre><p>把代码里的<code>example.com</code>替换成你的域名</p><p>这段配置的一个前提时，必须有<font size=5 color="red">域名</font>、<font size=5 color="red">SSL证书已安装</font> 。</p><p>代码来自 <a href="https://sanic.readthedocs.io/en/latest/sanic/nginx.html#nginx-configuration">Sanic 官方文档</a>。</p><p>到这里服务端就配置完成了。</p><h1 id="在前端这个WebSocket地址怎么写？"><a href="#在前端这个WebSocket地址怎么写？" class="headerlink" title="在前端这个WebSocket地址怎么写？"></a>在前端这个WebSocket地址怎么写？</h1><p>WebSocket 地址格式有两种</p><ul><li><p>ws://XXXXXXXX</p><p>ws 可以理解为 http</p></li><li><p>wss://XXXXXXXX</p><p>wss 可以理解为 https</p></li></ul><p>wss 是 ws 的加密版本</p><p><a href="https://help.aliyun.com/document_detail/63421.html">阿里云官方文档解释</a></p><p>因为我之前找的那个GitHub项目是人脸识别的，需要用到摄像头。必须安装SSL。所以 WebSocket 也要用到 WSS 。</p><pre><code class="apl">wss://example.com/api/aaa# 把 example.com 替换成你的域名。无需加端口# 后面跟上sanic中写的路由地址</code></pre><p><a href="https://www.idcd.com/tool/socket">WebSocket测试</a></p><p>在这个网站上填入上面你写好的后端接口，来测试是否成功。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 记录 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
